@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Karam — Estudos</title>
+<style>
+:root{--navy:#0b1f4b;--green:#009c3b;--yellow:#ffdf00;--bg:#f3f6ee;--card:#fff;--tx:#0b1f4b;--mut:#4d5b7c;--bd:#d5dcc9;--inp:#fff;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#071430;--card:#0f2557;--tx:#eef3ff;--mut:#a9b8dc;--bd:#22397a;--inp:#0b1d47;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#071430;--card:#0f2557;--tx:#eef3ff;--mut:#a9b8dc;--bd:#22397a;--inp:#0b1d47;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 "Segoe UI",system-ui,Arial,sans-serif;min-height:100vh;display:flex;flex-direction:column}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--navy);z-index:10}
+header{background:var(--navy);color:#fff;position:sticky;top:env(safe-area-inset-top,0px);z-index:9;border-bottom:4px solid var(--yellow)}
+.bar{max-width:1050px;margin:auto;padding:10px 16px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.logo{font-weight:800;font-size:1.5rem;letter-spacing:1px;color:#fff;text-decoration:none;display:flex;align-items:center;gap:8px}
+.logo i{width:22px;height:22px;background:var(--yellow);transform:rotate(45deg);border:5px solid var(--green);display:inline-block}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav a{color:#dbe6ff;text-decoration:none;padding:6px 11px;border-radius:8px;font-size:.92rem}
+nav a:hover{background:#17307a}nav a.on{background:var(--green);color:#fff}
+main{flex:1;width:100%;max-width:1050px;margin:auto;padding:20px 16px}
+h1{margin:.2em 0 .5em}h2{margin:.2em 0 .6em}
+.hero{background:linear-gradient(135deg,var(--green),#006b28);color:#fff;border-radius:16px;padding:34px 24px;position:relative;overflow:hidden;margin-bottom:20px}
+.hero::after{content:"";position:absolute;right:-30px;top:-30px;width:190px;height:190px;background:var(--yellow);transform:rotate(45deg);opacity:.95;border-radius:10px}
+.hero::before{content:"";position:absolute;right:30px;top:30px;width:80px;height:80px;background:var(--navy);border-radius:50%;z-index:1}
+.hero h1{font-size:2.2rem;margin:0 0 6px;position:relative;z-index:2}.hero p{max-width:560px;position:relative;z-index:2}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:16px;margin-bottom:14px}
+.grid .card{margin:0}.card h3{margin:0 0 6px}
+.ar1{border-top:5px solid var(--green)}.ar2{border-top:5px solid var(--yellow)}.ar3{border-top:5px solid #2f5fd0}.ar4{border-top:5px solid var(--navy)}
+.tag{display:inline-block;background:var(--bg);border:1px solid var(--bd);border-radius:20px;padding:1px 10px;margin:2px;font-size:.85rem}
+.btn{background:var(--green);color:#fff;border:0;border-radius:10px;padding:9px 16px;font:inherit;font-weight:600;cursor:pointer;text-decoration:none;display:inline-block}
+.btn.y{background:var(--yellow);color:var(--navy)}.btn.n{background:var(--navy);color:#fff}.btn.s{padding:3px 10px;background:transparent;color:var(--mut);border:1px solid var(--bd);font-weight:400}
+input,select,textarea{font:inherit;background:var(--inp);color:var(--tx);border:1px solid var(--bd);border-radius:9px;padding:8px 10px;width:100%}
+label{font-size:.85rem;color:var(--mut);display:block}
+form .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:10px}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px}
+.tabs button{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:20px;padding:5px 14px;cursor:pointer;font:inherit}
+.tabs button.on{background:var(--navy);color:var(--yellow);border-color:var(--navy)}
+.stat{font-size:2rem;font-weight:800;color:var(--green)}.stat small{display:block;font-size:.85rem;font-weight:400;color:var(--mut)}
+.scroll{overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.92rem}
+th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--bd)}th{color:var(--mut);font-weight:600}
+.pb{background:var(--bg);border-radius:8px;height:10px;min-width:80px;overflow:hidden}.pb b{display:block;height:100%;background:var(--green)}
+.clock{font-size:3.6rem;font-weight:800;text-align:center;font-variant-numeric:tabular-nums;color:var(--green);margin:6px 0}
+.mut{color:var(--mut)}.c{text-align:center}.gap{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+svg.ch{width:100%;height:auto;display:block}svg.ch text{fill:var(--mut);font-size:11px}
+footer{background:var(--navy);color:#cdd9f7;border-top:4px solid var(--green);margin-top:20px}
+footer .bar{justify-content:space-between;font-size:.9rem}footer a{color:var(--yellow)}
+.post{border-left:4px solid var(--yellow)}.rep{margin:6px 0 0 14px;padding:6px 10px;background:var(--bg);border-radius:8px;font-size:.92rem}
+</style>
+</head>
+<body>
+<header><div class="bar"><a class="logo" href="#inicio"><i></i>KARAM</a><nav id="nav"></nav><button class="btn s" id="th" style="color:#fff;border-color:#4a63a8;margin-left:auto">🌓 Tema</button></div></header>
+<main id="app"></main>
+<footer><div class="bar"><span>© 2026 Karam — Ordem e Progresso nos estudos.</span><span>Dados salvos neste navegador · <a href="#forum">Fórum</a> · <a href="#painel">Painel</a></span></div></footer>
+<script>
+const AREAS={Linguagens:["Redação","Gramática","Interpretação","Literatura","Inglês","Espanhol"],Humanas:["História","Geografia","Filosofia","Sociologia","Atualidades"],Natureza:["Física","Química","Biologia"],Exatas:["Matemática"]};
+const ALL=Object.values(AREAS).flat(),PAGES=[["inicio","Início"],["painel","Painel"],["questoes","Questões"],["simulados","Simulados"],["redacao","Redação"],["erros","Caderno de Erros"],["foco","Foco"],["metas","Metas"],["flash","Flashcards"],["forum","Fórum"],["exportar","Exportar"]];
+let D={q:[],sim:[],red:[],err:[],foco:[],forum:[],fl:[],cfg:{}};
+try{D=Object.assign(D,JSON.parse(localStorage.getItem("karam")||"{}"))}catch(e){}
+const save=()=>{try{localStorage.setItem("karam",JSON.stringify(D))}catch(e){}};
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const iso=d=>d.toLocaleDateString("sv"),today=()=>iso(new Date());
+const fmt=s=>{s=Math.round(s);return Math.floor(s/3600)+":"+String(Math.floor(s%3600/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")};
+const br=d=>d.split("-").reverse().join("/");
+const opts=()=>Object.entries(AREAS).map(([a,m])=>`<optgroup label="${a}">${m.map(x=>`<option>${x}</option>`).join("")}</optgroup>`).join("");
+const areaOf=m=>Object.keys(AREAS).find(a=>AREAS[a].includes(m))||"";
+const PER=[["dia","Hoje"],["semana","Semana"],["mes","Mês"],["sem","Semestre"],["ano","Ano"]];
+function start(p){const n=new Date(),y=n.getFullYear(),m=n.getMonth();
+ if(p=="dia")return iso(n);if(p=="semana"){const d=new Date(n);d.setDate(n.getDate()-((n.getDay()+6)%7));return iso(d)}
+ if(p=="mes")return iso(new Date(y,m,1));if(p=="sem")return iso(new Date(y,m<6?0:6,1));return iso(new Date(y,0,1))}
+let per="dia",simArea="Geral",kf="",T={run:false,t0:0,acc:0};
+const elapsed=()=>T.acc+(T.run?(Date.now()-T.t0)/1000:0);
+
+function chart(pts,max,unit){
+ if(!pts.length)return `<p class="mut c">Ainda sem dados para o gráfico.</p>`;
+ const W=600,H=230,p=34,x=i=>p+(pts.length>1?i*(W-2*p)/(pts.length-1):(W-2*p)/2),y=v=>H-p-v/max*(H-2*p);
+ let g="";for(let i=0;i<=4;i++){const v=max*i/4;g+=`<line x1="${p}" x2="${W-p}" y1="${y(v)}" y2="${y(v)}" stroke="var(--bd)"/><text x="4" y="${y(v)+4}">${Math.round(v)}</text>`}
+ const line=pts.map((q,i)=>x(i)+","+y(q.v)).join(" ");
+ return `<svg class="ch" viewBox="0 0 ${W} ${H}">${g}<polyline points="${line}" fill="none" stroke="var(--green)" stroke-width="3"/>${pts.map((q,i)=>`<circle cx="${x(i)}" cy="${y(q.v)}" r="5" fill="var(--yellow)" stroke="var(--navy)" stroke-width="2"/><text x="${x(i)}" y="${y(q.v)-10}" text-anchor="middle">${q.v}</text><text x="${x(i)}" y="${H-10}" text-anchor="middle">${q.l}</text>`).join("")}</svg>`}
+const del=(k,i)=>`<button class="btn s" data-a="del" data-k="${k}" data-i="${i}">excluir</button>`;
+const tabs=(list,cur,a)=>`<div class="tabs">${list.map(([k,l])=>`<button class="${k==cur?"on":""}" data-a="${a}" data-v="${k}">${l}</button>`).join("")}</div>`;
+
+const V={
+inicio:()=>`<div class="hero"><h1>Karam</h1><p>Seu centro de estudos para o ENEM e vestibulares. Registre questões, simulados, redações e horas de foco — e acompanhe sua evolução rumo à aprovação. Ordem e Progresso!</p><a class="btn y" href="#painel">Ver meu painel</a></div>
+<div class="grid">${Object.entries(AREAS).map(([a,m],i)=>`<div class="card ar${i+1}"><h3>${a}</h3>${m.map(x=>`<span class="tag">${x}</span>`).join("")}</div>`).join("")}</div>
+<h2 style="margin-top:24px">O que você encontra aqui</h2><div class="grid">
+${[["questoes","Questões","Quantas você fez por dia, semana, semestre e ano."],["simulados","Simulados","Notas e gráfico de evolução."],["redacao","Redação","Cinco competências, de 0 a 200 de 20 em 20."],["erros","Caderno de Erros","Guarde o que errou e por quê."],["foco","Timer de foco","Horas de estudo acumuladas."],["forum","Fórum","Converse com outros estudantes."]].map(([h,t,d])=>`<a href="#${h}" style="text-decoration:none;color:inherit"><div class="card"><h3>${t}</h3><span class="mut">${d}</span></div></a>`).join("")}</div>`,
+
+painel:()=>{const s=start(per),q=D.q.filter(r=>r.d>=s),f=D.foco.filter(r=>r.d>=s),tot=q.reduce((a,r)=>a+r.n,0),ac=q.reduce((a,r)=>a+r.c,0),sec=f.reduce((a,r)=>a+r.s,0);
+ const by=ALL.map(m=>{const r=q.filter(x=>x.m==m);return{m,n:r.reduce((a,x)=>a+x.n,0),c:r.reduce((a,x)=>a+x.c,0),s:f.filter(x=>x.m==m).reduce((a,x)=>a+x.s,0)}}).filter(r=>r.n||r.s);
+ return `<h1>Painel de desempenho</h1>${tabs(PER,per,"per")}<div class="grid"><div class="card stat">${tot}<small>questões feitas</small></div><div class="card stat">${tot?Math.round(ac/tot*100):0}%<small>de acertos</small></div><div class="card stat">${fmt(sec)}<small>tempo de foco</small></div></div>
+ <div class="card" style="margin-top:14px"><h3>Por matéria</h3>${by.length?`<div class="scroll"><table><tr><th>Matéria</th><th>Área</th><th>Questões</th><th>Acertos</th><th></th><th>Foco</th></tr>${by.map(r=>`<tr><td>${r.m}</td><td>${areaOf(r.m)}</td><td>${r.n}</td><td>${r.n?Math.round(r.c/r.n*100):0}%</td><td><div class="pb"><b style="width:${r.n?r.c/r.n*100:0}%"></b></div></td><td>${fmt(r.s)}</td></tr>`).join("")}</table></div>`:`<p class="mut">Nada registrado neste período.</p>`}</div>`},
+
+questoes:()=>`<h1>Questões</h1><div class="card"><form data-f="q"><div class="row"><div><label>Data</label><input type="date" name="d" value="${today()}" required></div><div><label>Matéria</label><select name="m">${opts()}</select></div><div><label>Feitas</label><input type="number" name="n" min="1" required></div><div><label>Acertos</label><input type="number" name="c" min="0" required></div></div><button class="btn">Registrar</button></form></div>
+<div class="card scroll"><table><tr><th>Data</th><th>Matéria</th><th>Feitas</th><th>Acertos</th><th></th></tr>${D.q.map((r,i)=>[r,i]).reverse().slice(0,25).map(([r,i])=>`<tr><td>${br(r.d)}</td><td>${r.m}</td><td>${r.n}</td><td>${r.c}</td><td>${del("q",i)}</td></tr>`).join("")||`<tr><td colspan="5" class="mut">Nenhum registro.</td></tr>`}</table></div>`,
+
+simulados:()=>{const r=D.sim.map((x,i)=>({...x,i})).sort((a,b)=>a.d<b.d?-1:1),fl=r.filter(x=>simArea=="Geral"?x.a=="Geral":x.a==simArea);
+ return `<h1>Simulados</h1><div class="card"><form data-f="sim"><div class="row"><div><label>Nome</label><input name="nome" placeholder="Simulado ENEM 1" required></div><div><label>Data</label><input type="date" name="d" value="${today()}" required></div><div><label>Área</label><select name="a">${["Geral",...Object.keys(AREAS)].map(a=>`<option>${a}</option>`).join("")}</select></div><div><label>Nota (0–1000)</label><input type="number" name="v" min="0" max="1000" step="0.1" required></div></div><button class="btn">Salvar nota</button></form></div>
+ <div class="card"><h3>Evolução</h3>${tabs(["Geral",...Object.keys(AREAS)].map(a=>[a,a]),simArea,"sa")}${chart(fl.map(x=>({l:br(x.d).slice(0,5),v:x.v})),1000)}</div>
+ <div class="card scroll"><table><tr><th>Data</th><th>Simulado</th><th>Área</th><th>Nota</th><th></th></tr>${[...r].reverse().map(x=>`<tr><td>${br(x.d)}</td><td>${esc(x.nome)}</td><td>${x.a}</td><td>${x.v}</td><td>${del("sim",x.i)}</td></tr>`).join("")||`<tr><td colspan="5" class="mut">Nenhum simulado.</td></tr>`}</table></div>`},
+
+redacao:()=>{const sel=[...Array(11)].map((_,i)=>`<option>${i*20}</option>`).join(""),r=D.red.map((x,i)=>({...x,i})).sort((a,b)=>a.d<b.d?-1:1);
+ return `<h1>Redação</h1><div class="card"><form data-f="red"><div class="row"><div><label>Tema</label><input name="t" required></div><div><label>Data</label><input type="date" name="d" value="${today()}" required></div></div><div class="row">${[1,2,3,4,5].map(i=>`<div><label>Competência ${i}</label><select name="c${i}">${sel}</select></div>`).join("")}</div><button class="btn">Salvar redação</button></form><p class="mut">Cada competência vai de 0 a 200, de 20 em 20. Total máximo: 1000.</p></div>
+ <div class="card"><h3>Banco de temas e repertório</h3><p><button class="btn y" data-a="rnd">Sortear tema</button> <b id="tm">${TEMAS[0]}</b></p><p>${REPS.map(x=>`<span class="tag">${x}</span>`).join("")}</p></div>
+ <div class="card"><h3>Editor de redação</h3><textarea id="ed" rows="8" placeholder="Escreva aqui seu texto..."></textarea><p class="mut" id="cnt">0 palavras · 0 caracteres · ~0 linhas</p></div>${avgc(r)}
+ <div class="card"><h3>Evolução da nota total</h3>${chart(r.map(x=>({l:br(x.d).slice(0,5),v:x.c.reduce((a,b)=>a+b,0)})),1000)}</div>
+ <div class="card scroll"><table><tr><th>Data</th><th>Tema</th><th>C1</th><th>C2</th><th>C3</th><th>C4</th><th>C5</th><th>Total</th><th></th></tr>${[...r].reverse().map(x=>`<tr><td>${br(x.d)}</td><td>${esc(x.t)}</td>${x.c.map(v=>`<td>${v}</td>`).join("")}<td><b>${x.c.reduce((a,b)=>a+b,0)}</b></td><td>${del("red",x.i)}</td></tr>`).join("")||`<tr><td colspan="9" class="mut">Nenhuma redação.</td></tr>`}</table></div>`},
+
+erros:()=>`<h1>Caderno de Erros</h1><div class="card"><form data-f="err"><div class="row"><div><label>Matéria</label><select name="m">${opts()}</select></div><div><label>Assunto</label><input name="a" required></div><div><label>Motivo</label><select name="mo"><option>Não sabia o conteúdo</option><option>Falta de atenção</option><option>Falta de tempo</option><option>Cálculo/interpretação</option><option>Chute</option></select></div></div><div style="margin-bottom:10px"><label>Questão / enunciado</label><textarea name="q" rows="3" required></textarea></div><div class="row"><div><label>Por que errei?</label><textarea name="w" rows="2"></textarea></div><div><label>Resposta certa / como resolver</label><textarea name="r" rows="2"></textarea></div></div><button class="btn">Guardar erro</button></form></div>
+ ${mot()}<div class="tabs"><button class="${kf?"":"on"}" data-a="kf" data-v="">Todas</button>${ALL.map(m=>`<button class="${kf==m?"on":""}" data-a="kf" data-v="${m}">${m}</button>`).join("")}</div>
+ ${D.err.map((x,i)=>[x,i]).filter(([x])=>!kf||x.m==kf).reverse().map(([x,i])=>`<div class="card post"><b>${x.m}</b> · ${esc(x.a)} ${x.mo?`<span class="tag">${x.mo}</span>`:""} <span class="mut">(${br(x.d)})</span><p>${esc(x.q)}</p>${x.w?`<p><b>Por que errei:</b> ${esc(x.w)}</p>`:""}${x.r?`<p><b>Correção:</b> ${esc(x.r)}</p>`:""}${del("err",i)}</div>`).join("")||`<p class="mut">Nenhum erro guardado.</p>`}`,
+
+foco:()=>`<h1>Timer de foco</h1><div class="card"><div class="clock" id="clock">${fmt(elapsed())}</div><div style="max-width:280px;margin:0 auto 12px"><label>Matéria</label><select id="fm">${opts()}</select></div><div class="gap"><button class="btn" data-a="t1">${T.run?"Pausar":"Iniciar"}</button><button class="btn y" data-a="t2">Salvar sessão</button><button class="btn n" data-a="t3">Zerar</button></div></div>
+ <div class="grid">${PER.map(([k,l])=>`<div class="card stat">${fmt(D.foco.filter(r=>r.d>=start(k)).reduce((a,r)=>a+r.s,0))}<small>${l}</small></div>`).join("")}</div>`,
+
+forum:()=>`<h1>Fórum</h1><p class="mut">Neste protótipo as conversas ficam salvas só no seu navegador.</p><div class="card"><form data-f="post"><div class="row"><div><label>Seu nome</label><input name="u" required></div><div><label>Título</label><input name="t" required></div><div><label>Categoria</label><select name="cat"><option>Geral</option>${opts()}</select></div></div><div style="margin-bottom:10px"><label>Mensagem</label><textarea name="x" rows="3" required></textarea></div><button class="btn">Publicar</button></form></div>
+ ${D.forum.map((p,i)=>[p,i]).reverse().map(([p,i])=>`<div class="card post"><h3>${esc(p.t)} ${p.cat?`<span class="tag">${p.cat}</span>`:""}</h3><span class="mut">${esc(p.u)} · ${br(p.d)}</span><p>${esc(p.x)}</p>${p.r.map(r=>`<div class="rep"><b>${esc(r.u)}:</b> ${esc(r.x)}</div>`).join("")}<form data-f="rep" data-i="${i}" style="display:flex;gap:6px;margin-top:8px"><input name="u" placeholder="Nome" style="max-width:120px" required><input name="x" placeholder="Responder..." required><button class="btn s">Enviar</button></form><button class="btn s" data-a="like" data-i="${i}">👍 ${p.l||0}</button> ${del("forum",i)}</div>`).join("")||`<p class="mut">Seja o primeiro a publicar.</p>`}`
+};
+const TEMAS=["Desafios para combater a desinformação no Brasil","Caminhos para valorizar a educação pública","Impactos da inteligência artificial no mercado de trabalho","Saúde mental dos jovens na era digital","Desigualdade no acesso à água potável","Preservação da Amazônia e desenvolvimento sustentável","Invisibilidade do trabalho de cuidado no Brasil","Democratização do acesso à cultura"];
+const REPS=["Constituição Federal de 1988","Sociedade do cansaço — Byung-Chul Han","Modernidade líquida — Bauman","Contrato social — Rousseau","Banalidade do mal — Hannah Arendt","Indústria cultural — Adorno","Declaração Universal dos Direitos Humanos","Agenda 2030 da ONU"];
+const add=n=>{const d=new Date();d.setDate(d.getDate()+n);return iso(d)};
+const sum=(a,f)=>a.reduce((s,x)=>s+f(x),0);
+const bar=(l,v,m)=>`<div>${l}: <b>${v}</b>${m?" / "+m:""}<div class="pb"><b style="width:${m?Math.min(100,v/m*100):0}%"></b></div></div>`;
+const avgc=r=>r.length?`<div class="card"><h3>Média por competência</h3>${[0,1,2,3,4].map(i=>bar("C"+(i+1),Math.round(sum(r,x=>x.c[i])/r.length),200)).join("")}</div>`:"";
+const mot=()=>{const c={};D.err.forEach(x=>{if(x.mo)c[x.mo]=(c[x.mo]||0)+1});const t=sum(Object.values(c),v=>v);return t?`<div class="card"><h3>Por que eu erro?</h3>${Object.entries(c).map(([k,v])=>bar(k,v,t)).join("")}</div>`:""};
+const days=()=>new Set([...D.q.map(r=>r.d),...D.foco.map(r=>r.d)]);
+const streak=()=>{const s=days(),d=new Date();if(!s.has(iso(d)))d.setDate(d.getDate()-1);let n=0;while(s.has(iso(d))){n++;d.setDate(d.getDate()-1)}return n};
+const heat=()=>{const m={};D.q.forEach(r=>m[r.d]=(m[r.d]||0)+r.n);D.foco.forEach(r=>m[r.d]=(m[r.d]||0)+r.s/60);let o="";for(let k=0;k<364;k++){const d=new Date();d.setDate(d.getDate()-363+k);const i=iso(d),v=m[i]||0;o+=`<rect x="${Math.floor(k/7)*11}" y="${k%7*11}" width="9" height="9" rx="2" fill="${v?"var(--green)":"var(--bd)"}" opacity="${v?Math.min(1,.3+v/80):1}"><title>${br(i)}: ${Math.round(v)}</title></rect>`}return `<div class="scroll"><svg viewBox="0 0 572 77" style="min-width:520px;width:100%">${o}</svg></div>`};
+V.metas=()=>{const c=D.cfg,sw=start("semana"),pw=iso(new Date(new Date(sw+"T12:00").getTime()-7*864e5)),
+ qw=sum(D.q.filter(r=>r.d>=sw),r=>r.n),qp=sum(D.q.filter(r=>r.d>=pw&&r.d<sw),r=>r.n),
+ hw=sum(D.foco.filter(r=>r.d>=sw),r=>r.s)/3600,hp=sum(D.foco.filter(r=>r.d>=pw&&r.d<sw),r=>r.s)/3600,
+ g=D.sim.filter(x=>x.a=="Geral").sort((a,b)=>a.d<b.d?-1:1),n=g.length;
+ let pr="Registre ao menos 2 simulados da área Geral.",med="—",gap="";
+ if(n){const l=g.slice(-3);med=Math.round(sum(l,x=>x.v)/l.length);if(c.alvo)gap=c.alvo>med?`Faltam <b>${c.alvo-med}</b> pontos para a nota de corte.`:"Você já está acima da nota de corte! 🎯"}
+ if(n>1){const mx=(n-1)/2,my=sum(g,x=>x.v)/n;let sxy=0,sxx=0;g.forEach((x,i)=>{sxy+=(i-mx)*(x.v-my);sxx+=(i-mx)**2});const b=sxy/sxx;pr=`${Math.max(0,Math.min(1000,Math.round(my+b*(n-mx))))} (tendência ${b>=0?"+":""}${b.toFixed(1)} por simulado)`}
+ const dd=c.exam?Math.ceil((new Date(c.exam)-new Date(today()))/864e5):null;
+ const rk=ALL.map(m=>{const r=D.q.filter(x=>x.m==m),t=sum(r,x=>x.n);return{m,w:(t?1-sum(r,x=>x.c)/t:.5)+.1}}),tw=sum(rk,x=>x.w),H=c.mh||20;
+ const tq=sum(D.q,r=>r.n),th=sum(D.foco,r=>r.s)/3600,st=streak();
+ const B=[["100 questões",tq>=100],["1000 questões",tq>=1000],["5000 questões",tq>=5000],["10h de foco",th>=10],["100h de foco",th>=100],["Sequência de 7 dias",st>=7],["Sequência de 30 dias",st>=30],["5 simulados",D.sim.length>=5],["5 redações",D.red.length>=5],["Redação 900+",D.red.some(x=>sum(x.c,v=>v)>=900)]];
+ return `<h1>Metas e hábito</h1><div class="grid"><div class="card stat">${dd==null?"—":dd>=0?dd:0}<small>dias para a prova</small></div><div class="card stat">🔥 ${st}<small>dias seguidos estudando</small></div><div class="card stat">${med}<small>média dos últimos simulados</small></div></div>
+ <div class="card" style="margin-top:14px"><h3>Defina suas metas</h3><form data-f="cfg"><div class="row"><div><label>Data da prova</label><input type="date" name="exam" value="${c.exam||""}"></div><div><label>Nota de corte do curso (0–1000)</label><input type="number" name="alvo" min="0" max="1000" value="${c.alvo||""}"></div><div><label>Meta de questões/semana</label><input type="number" name="mq" min="0" value="${c.mq||""}"></div><div><label>Meta de horas/semana</label><input type="number" name="mh" min="0" value="${c.mh||""}"></div></div><button class="btn">Salvar metas</button></form></div>
+ <div class="card"><h3>Esta semana</h3>${bar("Questões",qw,c.mq)}${bar("Horas de foco",hw.toFixed(1),c.mh)}<p class="mut">Semana passada: ${qp} questões e ${hp.toFixed(1)}h de foco.</p></div>
+ <div class="card"><h3>Nota de corte e previsão</h3><p>${gap||"Informe a nota de corte e registre simulados."}</p><p>Previsão do próximo simulado: <b>${pr}</b></p></div>
+ <div class="card"><h3>Cronograma sugerido (horas/semana)</h3><p class="mut">Mais tempo para onde você mais erra. Base: ${H}h por semana.</p><div class="scroll"><table>${[...rk].sort((a,b)=>b.w-a.w).slice(0,8).map(x=>`<tr><td>${x.m}</td><td>${(x.w/tw*H).toFixed(1)}h</td></tr>`).join("")}</table></div></div>
+ <div class="card"><h3>Mapa de calor do ano</h3>${heat()}</div>
+ <div class="card"><h3>Conquistas</h3>${B.map(([l,ok])=>`<span class="tag" style="${ok?"background:var(--yellow);color:var(--navy);font-weight:700":"opacity:.5"}">🏅 ${l}</span>`).join("")}</div>`};
+let fs=false;const due=()=>D.fl.filter(c=>c.next<=today());
+V.flash=()=>{const d=due(),c=d[0];return `<h1>Flashcards</h1><div class="card"><h3>Revisão de hoje (${d.length})</h3>${c?`<p class="mut">${c.m}</p><p style="font-size:1.3rem"><b>${esc(c.f)}</b></p>${fs?`<p>${esc(c.b)}</p><div class="gap"><button class="btn n" data-a="fno">Errei</button><button class="btn" data-a="fok">Acertei</button></div>`:`<button class="btn y" data-a="fshow">Mostrar resposta</button>`}`:`<p class="mut">Nada para revisar hoje. 🎉</p>`}</div>
+ <div class="card"><h3>Novo cartão</h3><form data-f="fl"><div class="row"><div><label>Matéria</label><select name="m">${opts()}</select></div></div><div style="margin-bottom:10px"><label>Frente (pergunta)</label><textarea name="f" rows="2" required></textarea></div><div style="margin-bottom:10px"><label>Verso (resposta)</label><textarea name="b" rows="2" required></textarea></div><button class="btn">Adicionar</button></form><p class="mut">Repetição espaçada: acertou, o cartão volta em 3, 7, 15 e 30 dias; errou, volta amanhã.</p></div>
+ <div class="card scroll"><table><tr><th>Matéria</th><th>Frente</th><th>Caixa</th><th>Próxima</th><th></th></tr>${D.fl.map((c,i)=>`<tr><td>${c.m}</td><td>${esc(c.f)}</td><td>${c.box+1}</td><td>${br(c.next)}</td><td>${del("fl",i)}</td></tr>`).join("")||`<tr><td colspan="5" class="mut">Nenhum cartão.</td></tr>`}</table></div>`};
+V.exportar=()=>{const L=["tipo;data;a;b;c;d;e;f;g"];D.q.forEach(r=>L.push(`questao;${r.d};${r.m};${r.n};${r.c}`));D.sim.forEach(r=>L.push(`simulado;${r.d};${r.nome};${r.a};${r.v}`));D.red.forEach(r=>L.push(`redacao;${r.d};${r.t};${r.c.join(";")}`));D.foco.forEach(r=>L.push(`foco;${r.d};${r.m};${r.s}`));D.err.forEach(r=>L.push(`erro;${r.d};${r.m};${r.a};${r.mo||""}`));
+ return `<h1>Exportar</h1><div class="card"><p>Copie o texto abaixo e cole numa planilha (Excel ou Google Planilhas), separando colunas por ponto e vírgula. Para PDF, use o botão e escolha “Salvar como PDF”.</p><textarea rows="10" readonly>${esc(L.join("\n"))}</textarea><p><button class="btn" data-a="print">Imprimir / salvar PDF</button></p></div>`};
+
+function render(){const h=(location.hash.slice(1)||"inicio");const k=V[h]?h:"inicio";
+ $("#nav").innerHTML=PAGES.map(([p,l])=>`<a href="#${p}" class="${p==k?"on":""}">${l}</a>`).join("");
+ $("#app").innerHTML=V[k]();document.title="Karam — "+(PAGES.find(p=>p[0]==k)||[,""])[1]}
+addEventListener("hashchange",()=>{render();scrollTo(0,0)});
+setInterval(()=>{const c=$("#clock");if(c)c.textContent=fmt(elapsed())},500);
+
+document.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b)return;const a=b.dataset.a,v=b.dataset.v;
+ if(a=="per")per=v;else if(a=="sa")simArea=v;else if(a=="kf")kf=v;
+ else if(a=="del"){D[b.dataset.k].splice(+b.dataset.i,1);save()}
+ else if(a=="t1"){if(T.run){T.acc=elapsed();T.run=false}else{T.t0=Date.now();T.run=true}}
+ else if(a=="t2"){const s=elapsed();if(s<1)return;const m=$("#fm").value;D.foco.push({d:today(),s:Math.round(s),m});T={run:false,t0:0,acc:0};save()}
+ else if(a=="t3")T={run:false,t0:0,acc:0};
+ else if(a=="fshow")fs=true;
+ else if(a=="fok"||a=="fno"){const c=due()[0];if(c){c.box=a=="fok"?Math.min(c.box+1,4):0;c.next=add(a=="fok"?[1,3,7,15,30][c.box]:1);save()}fs=false}
+ else if(a=="like"){const p=D.forum[+b.dataset.i];p.l=(p.l||0)+1;save()}
+ else if(a=="rnd"){$("#tm").textContent=TEMAS[Math.random()*TEMAS.length|0];return}
+ else if(a=="print"){try{print()}catch(x){}return}
+ render()});
+document.addEventListener("submit",e=>{e.preventDefault();const f=e.target,k=f.dataset.f,o=Object.fromEntries(new FormData(f));
+ if(k=="q"){const n=+o.n,c=Math.min(+o.c,n);D.q.push({d:o.d,m:o.m,n,c})}
+ if(k=="sim")D.sim.push({d:o.d,nome:o.nome,a:o.a,v:+o.v});
+ if(k=="red")D.red.push({d:o.d,t:o.t,c:[1,2,3,4,5].map(i=>Math.min(200,Math.round(+o["c"+i]/20)*20))});
+ if(k=="err")D.err.push({d:today(),m:o.m,a:o.a,mo:o.mo,q:o.q,w:o.w,r:o.r});
+ if(k=="post")D.forum.push({d:today(),u:o.u,t:o.t,x:o.x,cat:o.cat,l:0,r:[]});
+ if(k=="cfg")D.cfg=Object.assign(D.cfg,{exam:o.exam,alvo:+o.alvo||0,mq:+o.mq||0,mh:+o.mh||0});
+ if(k=="fl")D.fl.push({f:o.f,b:o.b,m:o.m,box:0,next:today()});
+ if(k=="rep")D.forum[+f.dataset.i].r.push({u:o.u,x:o.x});
+ save();render()});
+const ap=()=>{if(D.cfg.theme)document.documentElement.dataset.theme=D.cfg.theme};ap();
+$("#th").onclick=()=>{const dk=D.cfg.theme?D.cfg.theme=="dark":matchMedia("(prefers-color-scheme:dark)").matches;D.cfg.theme=dk?"light":"dark";save();ap()};
+document.addEventListener("input",e=>{if(e.target.id=="ed"){const v=e.target.value.trim();$("#cnt").textContent=(v?v.split(/\s+/).length:0)+" palavras · "+v.length+" caracteres · ~"+Math.ceil(v.length/80)+" linhas"}});
+render();
+</script>
+</body>
+</html>
