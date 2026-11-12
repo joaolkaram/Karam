@@ -144,7 +144,7 @@ V.metas=()=>{const c=D.cfg,sw=start("semana"),pw=iso(new Date(new Date(sw+"T12:0
  <div class="card" style="margin-top:14px"><h3>Defina suas metas</h3><form data-f="cfg"><div class="row"><div><label>Data da prova</label><input type="date" name="exam" value="${c.exam||""}"></div><div><label>Nota de corte do curso (0–1000)</label><input type="number" name="alvo" min="0" max="1000" value="${c.alvo||""}"></div><div><label>Meta de questões/semana</label><input type="number" name="mq" min="0" value="${c.mq||""}"></div><div><label>Meta de horas/semana</label><input type="number" name="mh" min="0" value="${c.mh||""}"></div></div><button class="btn">Salvar metas</button></form></div>
  <div class="card"><h3>Esta semana</h3>${bar("Questões",qw,c.mq)}${bar("Horas de foco",hw.toFixed(1),c.mh)}<p class="mut">Semana passada: ${qp} questões e ${hp.toFixed(1)}h de foco.</p></div>
  <div class="card"><h3>Nota de corte e previsão</h3><p>${gap||"Informe a nota de corte e registre simulados."}</p><p>Previsão do próximo simulado: <b>${pr}</b></p></div>
- <div class="card"><h3>Cronograma sugerido (horas/semana)</h3><p class="mut">Mais tempo para onde você mais erra. Base: ${H}h por semana.</p><div class="scroll"><table>${[...rk].sort((a,b)=>b.w-a.w).slice(0,8).map(x=>`<tr><td>${x.m}</td><td>${(x.w/tw*H).toFixed(1)}h</td></tr>`).join("")}</table></div></div>
+ ${plano()}
  ${bemv()}<div class="card"><h3>Mapa de calor do ano</h3>${heat()}</div>
  <div class="card"><h3>Conquistas</h3>${B.map(([l,ok])=>`<span class="tag" style="${ok?"background:var(--yellow);color:var(--navy);font-weight:700":"opacity:.5"}">🏅 ${l}</span>`).join("")}</div>`};
 let fs=false;const due=()=>D.fl.filter(c=>c.next<=today());
@@ -310,6 +310,25 @@ const guia=()=>{if(D.cfg.guia)return"";const S=[["metas","Defina sua nota de cor
  return `<div class="card post"><h3>Comece por aqui</h3>${S.map(([h,l,ok])=>`<p style="margin:4px 0">${ok?"✔":"○"} <a href="#${h}" style="color:var(--acc)">${l}</a></p>`).join("")}<button class="btn s" data-a="gd">Dispensar guia</button></div>`};
 const _ini=V.inicio;V.inicio=()=>_ini().replace('<div class="grid">',m=>guia()+m);
 const NAVG=[["inicio","Início"],["painel","Painel"],["Estudos",["questoes","simulados","redacao","erros","flash","feynman","assuntos","analises"]],["Rotina",["foco","metas","agenda"]],["Corpo e mente",["corpo","humor"]],["Mais",["speed","forum","visual","backup"]]];
+const BW={Matemática:1.4,Redação:1.3,Física:1,Química:1,Biologia:1,História:1,Geografia:1,Filosofia:.7,Sociologia:.7,Gramática:.8,Interpretação:1.1,Literatura:.8,Inglês:.7,Espanhol:.5,Atualidades:.7};
+const grab=()=>{const P={};document.querySelectorAll("[data-pl]").forEach(x=>P[x.dataset.pl]=+x.value||0);if(Object.keys(P).length)D.cfg.plano=P};
+document.addEventListener("input",e=>{if(e.target.dataset.pl!==undefined){const x=$("#plt");if(x)x.textContent=sum([...document.querySelectorAll("[data-pl]")],i=>+i.value||0).toFixed(1)}});
+const sug=()=>{const H=D.cfg.mh||20,t30=add(-30),fb=D.cfg.fb||{},area={};
+ AKS.forEach(([z,n])=>{const S=last(D.sim.filter(x=>x.ac&&x.ac[z]!=null),2);area[n]=S.length?1-sum(S,x=>x.ac[z])/S.length/45:null});
+ const rs=[...D.red.map(x=>sum(x.c,v=>v)),...D.sim.filter(x=>x.rd!=null).map(x=>x.rd)].slice(-5),ra=rs.length?sum(rs,v=>v)/rs.length:0;
+ const L=ALL.map(m=>{const w=x=>x.d>=t30?1:.5,q=D.q.filter(x=>x.m==m),qn=sum(q,x=>x.n*w(x)),qc=sum(q,x=>x.c*w(x)),
+  eq=m=="Redação"&&rs.length?1-ra/1000:(qn-qc+1)/(qn+2),er=D.err.filter(x=>x.m==m&&x.d>=t30).length,ea=Math.min(1,er/10),ar=area[areaOf(m)],
+  tp=(TOP[m]||[]).concat((D.cfg.ct||[]).filter(x=>x.m==m).map(x=>x.t)),cv=tp.length?sum(tp,x=>[1,.6,0][D.as[m+"|"+x]||0])/tp.length:.5,
+  mu=Math.max(.4,Math.min(2,1+.15*(fb[m]||0))),s=BW[m]*(.1+.4*eq+.2*ea+.15*(ar==null?.5:ar)+.15*cv)*mu,why=[];
+  if(m=="Redação"&&rs.length)why.push("nota média "+Math.round(ra));else if(qn>=5)why.push("acerto "+Math.round(qc/qn*100)+"% em "+Math.round(qn)+" questões");
+  if(er)why.push(er+" erros no caderno (30 dias)");if(ar!=null&&ar>.45)why.push("área fraca nos simulados");if(tp.length&&cv>.7)why.push("muitos assuntos pendentes");if(fb[m])why.push("seu feedback ("+(fb[m]>0?"+":"")+fb[m]+")");
+  return{m,s,why:why.join(" · ")||"sem dados ainda (peso padrão da prova)"}}),T=sum(L,x=>x.s);
+ L.forEach(x=>x.h=Math.round(x.s/T*H*2)/2);L.sort((a,b)=>b.h-a.h||b.s-a.s);L[0].h=+(L[0].h+H-sum(L,x=>x.h)).toFixed(1);return L};
+const plano=()=>{const S=sug(),P=D.cfg.plano||{},H=D.cfg.mh||20,s=start("semana"),done=m=>sum(D.foco.filter(x=>x.d>=s&&x.m==m),x=>x.s)/3600,tot=sum(ALL,m=>P[m]||0);
+ return `<div class="card"><h3>Cronograma semanal (horas)</h3><p class="mut">Edite livremente suas horas por matéria. A sugestão do Karam considera seus erros em questões, no caderno e nos simulados, a cobertura dos assuntos e o seu feedback.</p>
+ <form data-f="plano"><div class="scroll"><table><tr><th>Matéria</th><th>Seu plano</th><th>Sugerido</th><th>Feito</th><th>Por quê</th><th>Feedback</th></tr>${S.map(x=>`<tr><td>${x.m}</td><td><input type="number" name="${x.m}" data-pl="${x.m}" min="0" step="0.5" value="${P[x.m]??""}" style="width:80px"></td><td><b>${x.h}h</b></td><td>${done(x.m).toFixed(1)}h</td><td class="mut" style="font-size:.85rem">${x.why}</td><td style="white-space:nowrap"><button type="button" class="btn s" data-a="fb" data-v="${x.m}|1">＋ mais</button> <button type="button" class="btn s" data-a="fb" data-v="${x.m}|-1">－ menos</button></td></tr>`).join("")}</table></div>
+ <p>Total do seu plano: <b id="plt">${tot.toFixed(1)}</b>h · meta semanal: <b>${H}h</b></p><div class="gap" style="justify-content:flex-start"><button class="btn">Salvar meu plano</button><button type="button" class="btn y" data-a="apsug">Usar a sugestão</button></div></form>
+ <p class="mut" style="margin-bottom:0">Use “mais” ou “menos” para ensinar o Karam o que você acha. A sugestão se recalcula sozinha a cada questão, erro ou simulado registrado.</p></div>`};
 
 function render(){ap();const h=(location.hash.slice(1)||"inicio");const k=V[h]?h:"inicio";
  $("#nav").innerHTML=NAVG.map(g=>{const lk=p=>`<a href="#${p}" class="${p==k?"on":""}">${(PAGES.find(x=>x[0]==p)||[,p])[1]}</a>`;return typeof g[1]=="string"?lk(g[0]):`<details class="nv ${g[1].includes(k)?"on":""}"><summary>${g[0]} ▾</summary><div class="dd">${g[1].map(lk).join("")}</div></details>`}).join("");
@@ -334,6 +353,8 @@ document.addEventListener("click",e=>{const b=e.target.closest("[data-a]");if(!b
  else if(a=="cal"){const x=D.cal[+b.dataset.i];x.ok=!x.ok;save()}else if(a=="calw")wo+=+v;
  else if(a=="e2f"){const x=D.err[+b.dataset.i];D.fl.push({f:x.q,b:x.r||x.w||"(sem resposta)",m:x.m,box:0,next:today()});save()}
  else if(a=="gd"){D.cfg.guia=true;save()}
+ else if(a=="fb"){grab();const[m,d]=v.split("|");const f=D.cfg.fb=D.cfg.fb||{};f[m]=Math.max(-5,Math.min(5,(f[m]||0)+ +d));save()}
+ else if(a=="apsug"){const P={};sug().forEach(x=>P[x.m]=x.h);D.cfg.plano=P;save()}
  else if(a=="bk"){try{const u=URL.createObjectURL(new Blob([JSON.stringify(D)],{type:"application/json"})),l=document.createElement("a");l.href=u;l.download="karam-backup-"+today()+".json";l.click()}catch(x){}return}
  else if(a=="rs"){try{const o=JSON.parse($("#bkin").value);if(!$("#bkok").checked){$("#bkm").textContent="Marque a caixa de confirmação.";return}if(!o||typeof o!="object"||Array.isArray(o))throw 0;D=Object.assign(D0(),o);save()}catch(x){$("#bkm").textContent="Backup inválido.";return}}else if(a=="rv")rv=v;else if(a=="rc"){rc=v;rs=""}else if(a=="rs")rs=v;else if(a=="sk"){b.blur();key(v);return}else if(a=="sstart")gstart();else if(a=="sstop")fin();else if(a=="exs")exSel=v;
  else if(a=="agua"){D.ag.push({d:today(),ml:+v});save()}
@@ -346,6 +367,7 @@ document.addEventListener("submit",e=>{e.preventDefault();const f=e.target,k=f.d
  if(k=="post")D.forum.push({d:today(),u:o.u,t:o.t,x:o.x,cat:o.cat,l:0,r:[]});
  if(k=="cfg")D.cfg=Object.assign(D.cfg,{exam:o.exam,alvo:+o.alvo||0,mq:+o.mq||0,mh:+o.mh||0});
  if(k=="edit"){const r=D[ED.k][ED.i];SCH[ED.k].forEach(([p,l,ty])=>{const v=o[p];setp(r,p,ty=="n"?(v===""?null:+v):v)});if(ED.k=="sim")r.v=simv(r);if(ED.k=="sn")r.h=hrs(r.a,r.b);ED=null}
+ if(k=="plano"){const P={};ALL.forEach(m=>P[m]=+o[m]||0);D.cfg.plano=P}
  if(k=="cal")D.cal.push({d:o.d,h:o.h,t:o.t,tp:o.tp,ok:false});
  if(k=="ast")(D.cfg.ct=D.cfg.ct||[]).push({m:o.m,t:o.t.trim()});
  if(k=="hu")D.hu.push({d:o.d,m:+o.m,n:(o.n||"").trim()});
